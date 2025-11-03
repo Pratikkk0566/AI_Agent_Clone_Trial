@@ -1,0 +1,475 @@
+/* Reset and base styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #1a1a1a;
+    min-height: 100vh;
+    overflow: hidden;
+    position: relative;
+}
+
+/* Smudged/dirty background effect */
+.background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    overflow: hidden;
+    background: 
+        /* Noise texture */
+        url("data:image/svg+xml,%3Csvg viewBox='0 0 400 400' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E"),
+        /* Smudge gradients */
+        radial-gradient(ellipse 800px 600px at 15% 25%, rgba(60, 60, 60, 0.4) 0%, rgba(40, 40, 40, 0.2) 40%, transparent 70%),
+        radial-gradient(ellipse 600px 800px at 85% 75%, rgba(50, 50, 50, 0.3) 0%, rgba(30, 30, 30, 0.15) 50%, transparent 80%),
+        radial-gradient(ellipse 700px 500px at 45% 60%, rgba(70, 70, 70, 0.25) 0%, rgba(45, 45, 45, 0.1) 60%, transparent 90%),
+        radial-gradient(ellipse 500px 700px at 70% 30%, rgba(55, 55, 55, 0.35) 0%, rgba(35, 35, 35, 0.18) 45%, transparent 75%),
+        /* Base gradient */
+        linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 40%, #0f0f0f 100%);
+    background-size: 200px 200px, 800px 600px, 600px 800px, 700px 500px, 500px 700px, 100% 100%;
+}
+
+.background::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+        radial-gradient(ellipse 400px 300px at 25% 75%, rgba(80, 80, 80, 0.3) 0%, transparent 60%),
+        radial-gradient(ellipse 350px 450px at 75% 25%, rgba(70, 70, 70, 0.25) 0%, transparent 65%),
+        radial-gradient(ellipse 500px 200px at 60% 80%, rgba(90, 90, 90, 0.2) 0%, transparent 70%);
+    mix-blend-mode: multiply;
+    animation: smudgeOverlay 20s infinite ease-in-out;
+}
+
+@keyframes smudgeOverlay {
+    0%, 100% { opacity: 0.6; transform: scale(1) rotate(0deg); }
+    50% { opacity: 0.8; transform: scale(1.1) rotate(180deg); }
+}
+
+.blob {
+    position: absolute;
+    filter: blur(120px);
+    mix-blend-mode: multiply;
+    animation: smudge 15s infinite ease-in-out;
+    opacity: 0.6;
+}
+
+.blob-1 {
+    top: -20%;
+    left: -20%;
+    width: 800px;
+    height: 600px;
+    background: 
+        radial-gradient(ellipse 60% 40% at 30% 70%, rgba(80, 80, 80, 0.8) 0%, rgba(60, 60, 60, 0.4) 40%, transparent 70%),
+        radial-gradient(ellipse 40% 60% at 70% 30%, rgba(70, 70, 70, 0.6) 0%, rgba(50, 50, 50, 0.3) 50%, transparent 80%);
+    animation-delay: 0s;
+    border-radius: 30% 70% 70% 30% / 30% 30% 70% 70%;
+}
+
+.blob-2 {
+    top: 10%;
+    right: -30%;
+    width: 700px;
+    height: 800px;
+    background: 
+        radial-gradient(ellipse 70% 30% at 40% 60%, rgba(90, 90, 90, 0.7) 0%, rgba(70, 70, 70, 0.4) 30%, transparent 60%),
+        radial-gradient(ellipse 50% 80% at 60% 40%, rgba(60, 60, 60, 0.5) 0%, rgba(40, 40, 40, 0.3) 40%, transparent 70%);
+    animation-delay: 5s;
+    border-radius: 60% 40% 30% 70% / 40% 60% 40% 60%;
+}
+
+.blob-3 {
+    bottom: -30%;
+    left: 20%;
+    width: 900px;
+    height: 700px;
+    background: 
+        radial-gradient(ellipse 80% 50% at 20% 80%, rgba(100, 100, 100, 0.6) 0%, rgba(80, 80, 80, 0.3) 35%, transparent 65%),
+        radial-gradient(ellipse 40% 70% at 80% 20%, rgba(70, 70, 70, 0.5) 0%, rgba(50, 50, 50, 0.2) 45%, transparent 75%);
+    animation-delay: 10s;
+    border-radius: 70% 30% 60% 40% / 50% 70% 30% 50%;
+}
+
+.blob-4 {
+    top: 30%;
+    left: -10%;
+    width: 600px;
+    height: 500px;
+    background: 
+        radial-gradient(ellipse 50% 70% at 60% 40%, rgba(85, 85, 85, 0.7) 0%, rgba(65, 65, 65, 0.4) 40%, transparent 70%);
+    animation-delay: 3s;
+    border-radius: 40% 60% 50% 50% / 60% 40% 60% 40%;
+}
+
+.blob-5 {
+    top: 50%;
+    right: 10%;
+    width: 550px;
+    height: 650px;
+    background: 
+        radial-gradient(ellipse 60% 80% at 30% 50%, rgba(75, 75, 75, 0.6) 0%, rgba(55, 55, 55, 0.3) 50%, transparent 80%);
+    animation-delay: 8s;
+    border-radius: 50% 50% 40% 60% / 70% 30% 70% 30%;
+}
+
+.blob-6 {
+    bottom: 20%;
+    right: -20%;
+    width: 750px;
+    height: 550px;
+    background: 
+        radial-gradient(ellipse 70% 60% at 40% 70%, rgba(95, 95, 95, 0.5) 0%, rgba(75, 75, 75, 0.3) 45%, transparent 75%);
+    animation-delay: 12s;
+    border-radius: 35% 65% 55% 45% / 45% 55% 35% 65%;
+}
+
+@keyframes smudge {
+    0%, 100% {
+        transform: translate(0px, 0px) rotate(0deg) scale(1) skew(0deg, 0deg);
+        border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%;
+        filter: blur(120px) contrast(1.1);
+    }
+    20% {
+        transform: translate(-30px, -40px) rotate(72deg) scale(1.15) skew(5deg, -3deg);
+        border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%;
+        filter: blur(140px) contrast(1.2);
+    }
+    40% {
+        transform: translate(40px, -30px) rotate(144deg) scale(0.85) skew(-8deg, 6deg);
+        border-radius: 70% 30% 40% 60% / 40% 70% 60% 30%;
+        filter: blur(100px) contrast(1.3);
+    }
+    60% {
+        transform: translate(-20px, 35px) rotate(216deg) scale(1.08) skew(3deg, -7deg);
+        border-radius: 40% 70% 60% 30% / 70% 40% 30% 60%;
+        filter: blur(130px) contrast(1.1);
+    }
+    80% {
+        transform: translate(25px, -15px) rotate(288deg) scale(0.95) skew(-4deg, 4deg);
+        border-radius: 55% 45% 35% 65% / 45% 55% 45% 55%;
+        filter: blur(110px) contrast(1.25);
+    }
+}
+
+/* Main container */
+.container {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 20px;
+    position: relative;
+    z-index: 1;
+}
+
+/* Header */
+.header {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 20px;
+    padding: 20px 30px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.avatar {
+    width: 50px;
+    height: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.avatar-inner {
+    color: rgba(255, 255, 255, 0.9);
+}
+
+.header-text h1 {
+    color: rgba(255, 255, 255, 0.95);
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 2px;
+}
+
+.header-text p {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+    font-weight: 400;
+}
+
+/* Chat container */
+.chat-container {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.02);
+    backdrop-filter: blur(25px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+}
+
+/* Chat messages */
+.chat-messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.message {
+    display: flex;
+    gap: 12px;
+    max-width: 80%;
+    animation: messageSlide 0.3s ease-out;
+}
+
+@keyframes messageSlide {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.user-message {
+    align-self: flex-end;
+    flex-direction: row-reverse;
+}
+
+.assistant-message {
+    align-self: flex-start;
+}
+
+.message-avatar {
+    width: 32px;
+    height: 32px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.message-content {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 18px;
+    padding: 15px 20px;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+}
+
+.user-message .message-content {
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.message-text {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    line-height: 1.5;
+    word-wrap: break-word;
+}
+
+/* Input container */
+.input-container {
+    padding: 20px 30px;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.input-form {
+    position: relative;
+}
+
+.input-wrapper {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+#messageInput {
+    flex: 1;
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    padding: 15px 20px;
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+#messageInput::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+}
+
+#messageInput:focus {
+    border-color: rgba(255, 255, 255, 0.15);
+    background: rgba(255, 255, 255, 0.05);
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.05);
+}
+
+.send-button {
+    width: 48px;
+    height: 48px;
+    background: rgba(255, 255, 255, 0.05);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
+
+.send-button:hover {
+    background: rgba(255, 255, 255, 0.08);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3), inset 0 1px 0 rgba(255, 255, 255, 0.15);
+}
+
+.send-button:active {
+    transform: translateY(0);
+}
+
+.send-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none;
+}
+
+/* Loading indicator */
+.loading {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 12px 20px;
+    display: none;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+.loading-dots {
+    display: flex;
+    gap: 6px;
+    align-items: center;
+}
+
+.loading-dots span {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.6);
+    animation: loading 1.4s infinite ease-in-out;
+}
+
+.loading-dots span:nth-child(1) { animation-delay: -0.32s; }
+.loading-dots span:nth-child(2) { animation-delay: -0.16s; }
+
+@keyframes loading {
+    0%, 80%, 100% {
+        transform: scale(0.8);
+        opacity: 0.5;
+    }
+    40% {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
+
+/* Scrollbar */
+.chat-messages::-webkit-scrollbar {
+    width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.4);
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .container {
+        padding: 10px;
+        height: 100vh;
+    }
+    
+    .header {
+        padding: 15px 20px;
+        margin-bottom: 10px;
+    }
+    
+    .chat-messages {
+        padding: 20px;
+    }
+    
+    .input-container {
+        padding: 15px 20px;
+    }
+    
+    .message {
+        max-width: 90%;
+    }
+    
+    .header-text h1 {
+        font-size: 1.3rem;
+    }
+}
+
+/* Selection styling */
+::selection {
+    background: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.9);
+}
